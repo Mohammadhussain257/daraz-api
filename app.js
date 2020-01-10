@@ -22,6 +22,8 @@ const saltRounds=10;
 const jwtSecret = "0123456789abcdefghijklmnopqrstuvwxyz";
 
 //Middleware functions
+//make folder publicly available
+app.use('/upload',express.static(__dirname+'/upload/products'));
 app.use(bodyParser.json());
 app.use(express.urlencoded({extended:true}));
 
@@ -129,7 +131,7 @@ app.post('/save/product',upload.single('productImage'),(req,res)=>{
         specification:req.body.specification,
         delivery:req.body.delivery,
         services:req.body.services,
-        productImage:req.file.path
+        productImage:req.file.filename
     });
     newProduct.save().then((productDoc)=>{
         res.send(productDoc);
